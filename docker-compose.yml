@@ -1,0 +1,41 @@
+version: '3'
+
+volumes:
+  var-data:
+    driver: local
+
+services:
+    db:
+        image: mysql:5.7
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=gamdb
+            - MYSQL_USER=gam
+            - MYSQL_PASSWORD=gam
+        volumes:
+            - ./.data/db:/var/lib/mysql
+            - ./backend:/var/www/html
+            - /tmp:/tmp
+    webserver:
+        build:
+            context: ./
+            dockerfile: ./DevOps/Dockerfile
+        environment:
+            - APP_ENV
+            - APP_SECRET
+            - APP_DEBUG=${APP_DEBUG:-true}
+            - DATABASE_HOST=${DATABASE_HOST:-db}
+            - DATABASE_PORT=${DATABASE_PORT:-3306}
+            - DATABASE_NAME=${DATABASE_NAME:-gamdb}
+            - DATABASE_USER=${DATABASE_USER:-gam}
+            - DATABASE_PASSWORD=${DATABASE_PASSWORD:-gam}
+        volumes:
+            - ./backend:/var/www/html
+            - ./DevOps/server.conf:/etc/apache2/sites-available/000-default.conf
+            - ./DevOps/php.ini:/usr/local/etc/php/conf.d/php.ini
+            - var-data:/var/www/html/var
+        links:
+            - db
+        ports:
+            - 80:80
+            - 9000:8080

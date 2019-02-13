@@ -1,0 +1,26 @@
+#!/bin/bash
+
+PARAMS=$(echo $@)
+EXTRAS=
+if echo $PARAMS | egrep -q '\--as-root'; then
+    PARAMS=$(echo $PARAMS | sed 's/--as-root//')
+    EXTRAS=" -u 0:0"
+fi
+
+if echo $PARAMS | egrep -q '\--as-myself'; then
+    PARAMS=$(echo $PARAMS | sed 's/--as-myself//')
+    EXTRAS=" -u $UID:$GID"
+fi
+
+NAME="webserver-run-local"
+ID=$(docker ps -f name="$NAME" -q)
+
+if [ -z "$ID" ]; then
+    docker stop "$NAME" &>/dev/null
+    docker rm "$NAME" &>/dev/null
+
+    docker-compose run -d --no-deps --name "$NAME" webserver \
+        sh -c "while true; do echo 'beep'; sleep 5; done" >>/dev/null
+fi
+
+docker exec $EXTRAS $NAME $PARAMS

@@ -23,4 +23,4 @@ if [ -z "$ID" ]; then
         sh -c "while true; do echo 'beep'; sleep 5; done" >>/dev/null
 fi
 
-docker exec $EXTRAS $NAME $PARAMS
+docker exec $EXTRAS -it $NAME $PARAMS

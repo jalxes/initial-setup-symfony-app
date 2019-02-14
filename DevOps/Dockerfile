@@ -31,17 +31,17 @@ RUN mkdir -p var/log var/cache && chown -R www-data:www-data /var/www/ var/log v
 
 USER www-data:www-data
 
-ADD --chown=www-data:www-data ./backend/bin /var/www/html/bin
-ADD --chown=www-data:www-data ./backend/composer.json ./backend/composer.lock ./backend/symfony.lock /var/www/html/
+ADD --chown=www-data:www-data ./server/bin /var/www/html/bin
+ADD --chown=www-data:www-data ./server/composer.json ./server/composer.lock ./server/symfony.lock /var/www/html/
 
 RUN composer install --verbose --prefer-dist --no-interaction --no-dev --optimize-autoloader --no-suggest --no-scripts
 
-ADD --chown=www-data:www-data ./backend/cli /var/www/html/cli
-ADD --chown=www-data:www-data ./backend/config /var/www/html/config
-ADD --chown=www-data:www-data ./backend/public /var/www/html/public
-ADD --chown=www-data:www-data ./backend/src /var/www/html/src
-ADD --chown=www-data:www-data ./backend/templates /var/www/html/templates
-ADD --chown=www-data:www-data ./backend/translations /var/www/html/translations
+ADD --chown=www-data:www-data ./server/cli /var/www/html/cli
+ADD --chown=www-data:www-data ./server/config /var/www/html/config
+ADD --chown=www-data:www-data ./server/public /var/www/html/public
+ADD --chown=www-data:www-data ./server/src /var/www/html/src
+ADD --chown=www-data:www-data ./server/templates /var/www/html/templates
+ADD --chown=www-data:www-data ./server/translations /var/www/html/translations
 
 RUN composer dump-autoload
 

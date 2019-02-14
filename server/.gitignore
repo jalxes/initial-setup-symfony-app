@@ -17,4 +17,5 @@
 ###< symfony/web-server-bundle ###
 
 /bin/
+/node_modules/
 .php_cs.cache

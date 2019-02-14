@@ -8,9 +8,9 @@ help: ## show this help
 build: ## builds and install env
 	if [ ! -f .env ]; then cp .env.dist .env; fi
 	docker-compose up -d
-	backend/cli/composer install -f --no-dev -n
+	server/cli/composer install -f --no-dev -n
 
 build-dev: ## builds and install env for development
 	if [ ! -f .env ]; then cp .env.dist .env; fi
 	docker-compose up -d --build
-	backend/cli/composer install --dev -n
+	server/cli/composer install --dev -n

@@ -14,7 +14,7 @@ services:
             - MYSQL_PASSWORD=gam
         volumes:
             - ./.data/db:/var/lib/mysql
-            - ./backend:/var/www/html
+            - ./server:/var/www/html
             - /tmp:/tmp
     webserver:
         build:
@@ -30,7 +30,7 @@ services:
             - DATABASE_USER=${DATABASE_USER:-gam}
             - DATABASE_PASSWORD=${DATABASE_PASSWORD:-gam}
         volumes:
-            - ./backend:/var/www/html
+            - ./server:/var/www/html
             - ./DevOps/server.conf:/etc/apache2/sites-available/000-default.conf
             - ./DevOps/ports.conf:/etc/apache2/ports.conf
             - ./DevOps/php.ini:/usr/local/etc/php/conf.d/php.ini

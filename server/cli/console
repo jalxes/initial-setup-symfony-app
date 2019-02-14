@@ -1,0 +1,3 @@
+#! /bin/bash
+
+server/cli/run-local php bin/console $@

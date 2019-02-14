@@ -45,4 +45,3 @@ ADD --chown=www-data:www-data ./server/translations /var/www/html/translations
 RUN composer dump-autoload
 
 EXPOSE 8080
-CMD ["apache2-foreground"]

@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
     git \
     libfreetype6-dev \
     libicu-dev \
-    libjpeg62-turbo-dev
+    libjpeg62-turbo-dev \
+    sudo
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) \
@@ -19,9 +20,9 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN echo "Install Composer" \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
-RUN echo '' >/etc/apache2/ports.conf
 ADD ./DevOps/php.ini /usr/local/etc/php/php.ini
 COPY ./DevOps/server.conf /etc/apache2/sites-available/000-default.conf
+COPY ./DevOps/ports.conf /etc/apache2/ports.conf
 
 WORKDIR /var/www/html/
 
@@ -35,7 +36,7 @@ ADD --chown=www-data:www-data ./backend/composer.json ./backend/composer.lock ./
 
 RUN composer install --verbose --prefer-dist --no-interaction --no-dev --optimize-autoloader --no-suggest --no-scripts
 
-ADD --chown=www-data:www-data ./cli /var/www/html/cli
+ADD --chown=www-data:www-data ./backend/cli /var/www/html/cli
 ADD --chown=www-data:www-data ./backend/config /var/www/html/config
 ADD --chown=www-data:www-data ./backend/public /var/www/html/public
 ADD --chown=www-data:www-data ./backend/src /var/www/html/src

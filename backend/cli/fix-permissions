@@ -1,0 +1,18 @@
+#!/bin/bash
+BASE_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/..
+echo $BASE_PATH
+for folder in $(echo $BASE_PATH/{vendor,bin,var,var/cache/${APP_ENV},public/assets}); do
+    if [ ! -d $folder ]; then
+        mkdir -p $folder
+    fi
+
+    OWNER=$(stat -c "%u" $folder)
+    if [[ $OWNER != 33 ]]; then
+        sudo chown -R 33:33 $folder
+    fi
+done
+
+touch $BASE_PATH $BASE_PATH/{composer.json,composer.lock,symfony.lock,.php_cs.cache} &&
+    chmod a+rw $BASE_PATH $BASE_PATH/{composer.json,composer.lock,symfony.lock,.php_cs.cache} &&
+    chmod -R a+rw $BASE_PATH/src/Migrations &&
+    chmod -R a+x $BASE_PATH/{cli,bin}

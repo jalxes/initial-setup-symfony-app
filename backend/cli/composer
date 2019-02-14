@@ -1,0 +1,4 @@
+#! /bin/bash
+
+backend/cli/run-local --as-root cli/fix-permissions
+backend/cli/run-local composer $@

@@ -1,23 +1,42 @@
 parameters:
-    # Adds a fallback DATABASE_URL if the env var is not set.
-    # This allows you to run cache:warmup even if your
-    # environment variables are not available yet.
-    # You should not need to change this value.
-    env(DATABASE_URL): ''
+    database_host: "%env(DATABASE_HOST)%"
+    database_port: "%env(DATABASE_PORT)%"
+    database_name: "%env(DATABASE_NAME)%"
+    database_user: "%env(DATABASE_USER)%"
+    database_password: "%env(DATABASE_PASSWORD)%"
+    migrations_user: "%env(DATABASE_USER)%"
+    migrations_password: "%env(DATABASE_PASSWORD)%"
 
 doctrine:
     dbal:
-        # configure these for your database server
-        driver: 'pdo_mysql'
-        server_version: '5.7'
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
-
-        url: '%env(resolve:DATABASE_URL)%'
+        types:
+            uuid: Ramsey\Uuid\Doctrine\UuidType
+        default_connection: default
+        connections:
+            default:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  UTF8
+                mapping_types:
+                    enum: string
+                server_version: 5.7
+            migrations:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%migrations_user%"
+                password: "%migrations_password%"
+                charset:  UTF8
+                mapping_types:
+                    enum: string
+                server_version: 5.7
     orm:
-        auto_generate_proxy_classes: true
+        auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         mappings:

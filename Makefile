@@ -9,8 +9,10 @@ build: ## builds and install env
 	if [ ! -f .env ]; then cp .env.dist .env; fi
 	docker-compose up -d
 	server/cli/composer install -f --no-dev -n
+	server/cli/migrations migrate
 
 build-dev: ## builds and install env for development
 	if [ ! -f .env ]; then cp .env.dist .env; fi
 	docker-compose up -d --build
 	server/cli/composer install --dev -n
+	server/cli/migrations migrate

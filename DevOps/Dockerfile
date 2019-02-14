@@ -36,7 +36,6 @@ ADD --chown=www-data:www-data ./server/composer.json ./server/composer.lock ./se
 
 RUN composer install --verbose --prefer-dist --no-interaction --no-dev --optimize-autoloader --no-suggest --no-scripts
 
-ADD --chown=www-data:www-data ./server/cli /var/www/html/cli
 ADD --chown=www-data:www-data ./server/config /var/www/html/config
 ADD --chown=www-data:www-data ./server/public /var/www/html/public
 ADD --chown=www-data:www-data ./server/src /var/www/html/src

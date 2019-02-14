@@ -1,5 +1,5 @@
 #!/bin/bash
-BASE_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/..
+BASE_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../server
 for folder in $(echo $BASE_PATH/{vendor,bin,var,var/cache/${APP_ENV},public/assets}); do
     if [ ! -d $folder ]; then
         mkdir -p $folder
@@ -14,4 +14,5 @@ done
 touch $BASE_PATH $BASE_PATH/{composer.json,composer.lock,symfony.lock,.php_cs.cache} &&
     chmod a+rw $BASE_PATH $BASE_PATH/{composer.json,composer.lock,symfony.lock,.php_cs.cache} &&
     chmod -R a+rw $BASE_PATH/src/Migrations &&
-    chmod -R a+x $BASE_PATH/{cli,bin}
+    chmod -R a+x $BASE_PATH/bin &&
+    chmod -R a+x $BASE_PATH/../cli

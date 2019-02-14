@@ -30,7 +30,7 @@ services:
             - DATABASE_USER=${DATABASE_USER:-gam}
             - DATABASE_PASSWORD=${DATABASE_PASSWORD:-gam}
         volumes:
-            - ./server:/var/www/html
+            - ./:/var/www/html
             - ./DevOps/server.conf:/etc/apache2/sites-available/000-default.conf
             - ./DevOps/ports.conf:/etc/apache2/ports.conf
             - ./DevOps/php.ini:/usr/local/etc/php/conf.d/php.ini
@@ -38,5 +38,4 @@ services:
         links:
             - db
         ports:
-            - 80:80
             - 9000:8080

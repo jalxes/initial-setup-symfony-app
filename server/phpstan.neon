@@ -5,4 +5,4 @@ includes:
 
 parameters:
     symfony:
-        container_xml_path: var/cache/dev/srcDevDebugProjectContainer.xml
+        container_xml_path: server/var/cache/dev/srcApp_KernelDevDebugContainer.xml

@@ -1,2 +1,2 @@
-# gam-portfolios-admin
-System of Custumer Portfolio Adminstration
+# sample-project-struct
+
